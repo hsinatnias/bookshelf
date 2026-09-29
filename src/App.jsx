@@ -1,6 +1,9 @@
-import { useState } from 'react';
-import BookCard from "./components/BookCard.jsx";
-import UserInputs from "./components/UserInputs.jsx";
+import {useState} from 'react';
+import UserForm from "./components/UserForm.jsx";
+import Header from "./components/Header.jsx";
+import FilterBar from "./components/FilterBar.jsx";
+import BookList from "./components/BookList.jsx";
+
 const initialBooks =[
   {id: 1, title: "Clean Code", author: "Robert C. Martin", read: false},
   {id: 2, title: "The Pragmatic Programmer", author: "Andy Hunt", read: true},
@@ -8,19 +11,18 @@ const initialBooks =[
 ];
 function App(){
   const [books, setBooks] = useState(initialBooks);
-  const [newBook, setNewBook] = useState({ title: "", author: "" });
+
   const [filter, setFilter] = useState("all");
 
-  const filterOptions = ["all", "read", "unread"];
+
 
   function handleToggle(id){
     setBooks(prevBooks=>
       prevBooks.map(book =>
-        book.id == id ? {...book, read: !book.read} : book
+        book.id === id ? {...book, read: !book.read} : book
       )
     );
   }
-
 
   function handleDelete(id){
 
@@ -29,22 +31,19 @@ function App(){
         book.id !== id 
     ));
   }
+  function handleAdd(newBook){
 
- function handleInputChange(field, value) {
-  setNewBook(prev => ({ ...prev, [field]: value }));
-}
+    setBooks((prevBook) =>{
+      return [...prevBook, {...newBook, id: Date.now(), read: false}];
+    })
+  }
 
-function handleAdd(){
-  if (newBook.title.trim() === "") return;
-  setBooks((prevBook) =>{
-      const updatedBook = [...prevBook, {...newBook, id: Date.now(), read: false}];      
-    return updatedBook;
-  })
-  setNewBook({ title: "", author: "" });
-}
+  function onFilterChange(option){
+    setFilter(option);
+  }
 
-  let readCount = books.filter(book=> book.read).length;
-
+  const readCount = books.filter(book=> book.read).length;
+  const booksLength = books.length;
   const visibleBooks = books.filter((book)=>{
 
     if(filter === "all"){
@@ -57,56 +56,13 @@ function handleAdd(){
   });
 
   return <>
-  <header className="header">
-    <h1>My Book Shelf</h1>
-    <p>You have {books.length} books. Read: {readCount} / {books.length}</p>
-  </header>
-  <section className="add-form">
+<Header booksLength={booksLength} readCount={readCount} books={books} />
 
-    <UserInputs
-      inputType="title"
-      value={newBook.title}
-      onChange={e => handleInputChange("title", e.target.value)}
-    />
-    <UserInputs
-      inputType="author"
-      value={newBook.author}
-      onChange={e => handleInputChange("author", e.target.value)}
-    />
-    <button onClick={handleAdd}>Add</button>
-
-  </section>
-
+<UserForm handleAdd={handleAdd}  />
   
-    <section className="filters">
 
-      {filterOptions.map(option =>(
-          <button
-
-          key={option}
-          className={filter === "all" ? "filter-btn active" : "filter-btn"}
-          onClick={()=> setFilter(option)}
-          >
-            {option}
-          </button>
-      ))}
-    </section>
-
-    <section>
-      <ul className="book-list">
-      {visibleBooks.map(book => 
-       <BookCard 
-        key={book.id} 
-        id={book.id} 
-        title={book.title} 
-        author={book.author} 
-        read={book.read} 
-        handleToggle={handleToggle}
-        handleDelete={handleDelete}
-      />
-    )}
-    </ul>
-    </section>
+<FilterBar filter={filter} onFilterChange={onFilterChange} />
+<BookList books={visibleBooks} onToggle={handleToggle} onDelete={handleDelete} />
     
   </>
 }
