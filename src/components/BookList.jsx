@@ -11,8 +11,8 @@ export default function BookList({books, onToggle, onDelete}) {
                         title={book.title}
                         author={book.author}
                         read={book.read}
-                        handleToggle={onToggle}
-                        handleDelete={onDelete}
+                        onToggle={onToggle}
+                        onDelete={onDelete}
                     />
                 )}
             </ul>

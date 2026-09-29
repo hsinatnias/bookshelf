@@ -1,7 +1,7 @@
 import { useState } from "react";
 import UserInputs from "./UserInputs.jsx";
 
-export default function UserForm({handleAdd}) {
+export default function UserForm({onAdd}) {
 
     const [newBook, setNewBook] = useState({ title: "", author: "" });
 
@@ -11,7 +11,7 @@ export default function UserForm({handleAdd}) {
 
     function handleSubmit() {
         if (newBook.title.trim() === "") return;
-        handleAdd(newBook);
+        onAdd(newBook);
         setNewBook({ title: "", author: "" });
     }
 

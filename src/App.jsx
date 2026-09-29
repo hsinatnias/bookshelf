@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import UserForm from "./components/UserForm.jsx";
 import Header from "./components/Header.jsx";
 import FilterBar from "./components/FilterBar.jsx";
@@ -10,11 +10,18 @@ const initialBooks =[
   {id: 3, title: "Atomic Habits", author: "James Clear", read: false}
 ];
 function App(){
-  const [books, setBooks] = useState(initialBooks);
+  const [books, setBooks] = useState(()=>{
+    try{
+      return JSON.parse(localStorage.getItem("books")) ?? initialBooks;
+    }catch(err){
+      return initialBooks;
+    }
 
+  });
   const [filter, setFilter] = useState("all");
-
-
+  useEffect(()=>{
+    localStorage.setItem("books", JSON.stringify(books))
+  }, [books])
 
   function handleToggle(id){
     setBooks(prevBooks=>
@@ -38,7 +45,7 @@ function App(){
     })
   }
 
-  function onFilterChange(option){
+  function handleFilterChange(option){
     setFilter(option);
   }
 
@@ -47,7 +54,7 @@ function App(){
   const visibleBooks = books.filter((book)=>{
 
     if(filter === "all"){
-      return book;
+      return true;
     }else if(filter === "read"){
       return book.read;
     }else{
@@ -56,14 +63,10 @@ function App(){
   });
 
   return <>
-<Header booksLength={booksLength} readCount={readCount} books={books} />
-
-<UserForm handleAdd={handleAdd}  />
-  
-
-<FilterBar filter={filter} onFilterChange={onFilterChange} />
-<BookList books={visibleBooks} onToggle={handleToggle} onDelete={handleDelete} />
-    
+    <Header booksLength={booksLength} readCount={readCount}  />
+    <UserForm onAdd={handleAdd}  />
+    <FilterBar filter={filter} onFilterChange={handleFilterChange} />
+    <BookList books={visibleBooks} onToggle={handleToggle} onDelete={handleDelete} />
   </>
 }
 

@@ -1,4 +1,4 @@
-export default function BookCard({title, author, read, id,  handleToggle, handleDelete}){
+export default function BookCard({title, author, read, id,  onToggle, onDelete}){
 
 	
 	return(
@@ -6,8 +6,8 @@ export default function BookCard({title, author, read, id,  handleToggle, handle
 			<h3>{title}</h3>
 			<p>{author}</p>
 			<p>{read ? "✅ Read": "📖 Not read yet"}</p>
-			<button onClick={()=>handleToggle(id)}>Toggle Read</button>
-			<button className="delete-btn" onClick={()=>handleDelete(id)}>Delete</button>
+			<button onClick={()=>onToggle(id)}>Toggle Read</button>
+			<button className="delete-btn" onClick={()=>onDelete(id)}>Delete</button>
 		</li>
 	)
 }
