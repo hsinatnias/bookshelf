@@ -1,0 +1,131 @@
+/* Reset: makes width include padding and border, which is much easier to reason about */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;                           /* browsers add a default margin; remove it */
+  font-family: system-ui, sans-serif;
+  background-color: #f4f5f7;
+  color: #222;
+}
+
+.header {
+  background-color: #08f;
+  color: white;
+  padding: 1.5rem 2rem;                /* 1.5rem top/bottom, 2rem left/right */
+}
+
+.header h1 {
+  margin: 0 0 0.25rem;                 /* top, left/right, bottom */
+}
+
+.book-list {
+  list-style: none;                    /* remove the bullet points */
+  padding: 0;
+  max-width: 600px;                    /* keep it readable on wide screens */
+  margin: 2rem auto;                   /* "auto" left/right centers the block */
+  display: flex;
+  flex-direction: column;              /* stack cards vertically */
+  gap: 1rem;                           /* space between cards */
+}
+
+.book-card {
+  background: white;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;                  /* rounded corners */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.book-card h3 {
+  margin: 0 0 0.25rem;
+}
+
+.book-card p {
+  margin: 0;
+  color: #666;
+}
+
+.book-card.read {
+  opacity: 0.6;                /* fade the whole card */
+}
+
+.book-card.read h3 {
+  text-decoration: line-through;
+}
+
+
+
+.book-card button, .add-form button {
+  padding: 0.4rem 0.9rem;
+  border: none;
+  border-radius: 6px;
+  background: #08f;
+  color: white;
+  cursor: pointer;
+}
+
+.book-card button {
+  margin-top: 0.75rem;
+  margin-right: 0.5rem;
+}
+
+.book-card button:hover, .add-form button:hover {
+  background: #0066cc;         /* :hover applies while the mouse is over it */
+}
+
+.add-form {
+  max-width: 600px;              /* same width as the book list */
+  margin: 2rem auto 0;           /* centered; no bottom margin (the list has its own top margin) */
+  display: flex;                 /* inputs and button in one row */
+  gap: 0.5rem;
+  flex-wrap: wrap;               /* on small screens, items wrap to a new line instead of squeezing */
+}
+
+.add-form input {
+  flex: 1;                       /* both inputs share the leftover space equally */
+  min-width: 150px;              /* below this width, wrap rather than shrink further */
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;          /* inputs don't inherit the page font by default */
+}
+
+.add-form input:focus {
+  outline: none;                 /* remove the browser's default focus ring... */
+  border-color: #08f;            /* ...and replace it with our own blue border */
+  box-shadow: 0 0 0 3px rgba(0, 136, 255, 0.2);
+}
+
+
+
+.book-card .delete-btn {
+  background: #e5484d;
+}
+
+.book-card .delete-btn:hover {
+  background: #c53036;
+}
+
+.filters {
+  max-width: 600px;
+  margin: 1.5rem auto 0;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.filter-btn {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid #08f;
+  border-radius: 999px;          /* a large radius makes fully rounded "pill" ends */
+  background: white;
+  color: #08f;
+  cursor: pointer;
+  text-transform: capitalize;    /* shows "all" as "All" without changing your data */
+}
+
+.filter-btn.active {
+  background: #08f;
+  color: white;
+}
