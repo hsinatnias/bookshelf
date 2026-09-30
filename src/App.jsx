@@ -3,6 +3,7 @@ import UserForm from "./components/UserForm.jsx";
 import Header from "./components/Header.jsx";
 import FilterBar from "./components/FilterBar.jsx";
 import BookList from "./components/BookList.jsx";
+import BookSearch from "./components/BookSearch.jsx";
 
 const initialBooks =[
   {id: 1, title: "Clean Code", author: "Robert C. Martin", read: false},
@@ -65,6 +66,7 @@ function App(){
   return <>
     <Header booksLength={booksLength} readCount={readCount}  />
     <UserForm onAdd={handleAdd}  />
+    <BookSearch onAdd={handleAdd}/>
     <FilterBar filter={filter} onFilterChange={handleFilterChange} />
     <BookList books={visibleBooks} onToggle={handleToggle} onDelete={handleDelete} />
   </>

@@ -129,3 +129,105 @@ body {
   background: #08f;
   color: white;
 }
+
+/* ---------- Book search ---------- */
+
+.book-search {
+  max-width: 600px;
+  margin: 2rem auto 0;
+  padding: 1.25rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.book-search label {
+  display: block;                  /* labels are inline by default; this puts it on its own line */
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.search-bar {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: #08f;
+  box-shadow: 0 0 0 3px rgba(0, 136, 255, 0.2);
+}
+
+.search-bar button,
+.add-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: #08f;
+  color: white;
+  cursor: pointer;
+  white-space: nowrap;             /* keeps "Add to Shelf" on one line */
+}
+
+.search-bar button:hover,
+.add-btn:hover {
+  background: #0066cc;
+}
+
+.search-status {
+  margin: 1rem 0 0;
+  color: #666;
+}
+
+.search-status.error {
+  color: #c53036;
+}
+
+/* ---------- Results table ---------- */
+
+.table-wrapper {
+  margin-top: 1rem;
+  overflow-x: auto;                /* on narrow screens the table scrolls sideways instead of breaking the page */
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;       /* merges double cell borders into single lines */
+  font-size: 0.95rem;
+}
+
+.results-table th,
+.results-table td {
+  padding: 0.6rem 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.results-table th {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #666;
+}
+
+.results-table tbody tr:hover {
+  background: #f4f8ff;             /* highlight the row under the mouse */
+}
+
+.results-table td:last-child {
+  text-align: right;               /* push the Add button to the right edge */
+}
+
+.add-btn {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+}
