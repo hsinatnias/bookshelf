@@ -40,10 +40,21 @@ function App(){
     ));
   }
   function handleAdd(newBook){
+    const isDuplicate = books.some(book=>{
+      return book.title.trim().toLowerCase() === newBook.title.trim().toLowerCase()
+    });
 
-    setBooks((prevBook) =>{
-      return [...prevBook, {...newBook, id: Date.now(), read: false}];
+    if(isDuplicate) return false;
+    const book= {
+      title: newBook.title.trim(),
+      author: newBook.author.trim(),
+      id: Date.now(),
+      read: false,
+    }
+    setBooks((prevBooks) =>{
+      return [...prevBooks, book];
     })
+    return true;
   }
 
   function handleFilterChange(option){
