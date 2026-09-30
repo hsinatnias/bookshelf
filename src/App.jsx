@@ -40,11 +40,8 @@ function App(){
     ));
   }
   function handleAdd(newBook){
-    const isDuplicate = books.some(book=>{
-      return book.title.trim().toLowerCase() === newBook.title.trim().toLowerCase()
-    });
+    if(isOnShelf(newBook.title)) return false;
 
-    if(isDuplicate) return false;
     const book= {
       title: newBook.title.trim(),
       author: newBook.author.trim(),
@@ -55,6 +52,28 @@ function App(){
       return [...prevBooks, book];
     })
     return true;
+  }
+
+  function isOnShelf(title){
+    return books.some(book=>{
+      return book.title.trim().toLowerCase() === title.trim().toLowerCase()
+    });
+  }
+
+  function handleUpdate(id, changes){
+
+    const isDuplicate = books.some(book=>
+        book.id !== id &&
+      book.title.trim().toLowerCase() === changes.title.trim().toLowerCase()
+    )
+    if(isDuplicate) return false;
+    setBooks((prevBooks) =>
+      prevBooks.map(book=>
+        book.id === id ? {...book, title:changes.title.trim(), author: changes.author.trim()} : book
+      )
+    )
+
+    return true
   }
 
   function handleFilterChange(option){
@@ -77,9 +96,9 @@ function App(){
   return <>
     <Header booksLength={booksLength} readCount={readCount}  />
     <UserForm onAdd={handleAdd}  />
-    <BookSearch onAdd={handleAdd}/>
+    <BookSearch onAdd={handleAdd} isOnShelf={isOnShelf}/>
     <FilterBar filter={filter} onFilterChange={handleFilterChange} />
-    <BookList books={visibleBooks} onToggle={handleToggle} onDelete={handleDelete} />
+    <BookList books={visibleBooks} onToggle={handleToggle} onDelete={handleDelete} onUpdate={handleUpdate}/>
   </>
 }
 

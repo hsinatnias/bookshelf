@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function BookSearch({onAdd}) {
+export default function BookSearch({onAdd, isOnShelf}) {
     const [query, setQuery] = useState("");
     const [results, setResults] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -9,6 +9,8 @@ export default function BookSearch({onAdd}) {
 
     async function handleSearch(event) {
         event.preventDefault();
+        if(isLoading) return;
+
         if (query.trim() === "") return;
         setIsLoading(true);
         setErrors(null);
@@ -27,6 +29,7 @@ export default function BookSearch({onAdd}) {
             setIsLoading(false);
         }
     }
+
 
     let content = null;
 
@@ -52,14 +55,17 @@ export default function BookSearch({onAdd}) {
                 { results.map((book) =>
                     {
                         const author = book.author_name?.[0] ?? "Unknown author";
+                        const onShelf = isOnShelf(book.title);
 
                         return(
                             <tr key={book.key}>
                                 <td >{book.title}</td>
                                 <td >{author}</td>
                                 <td >{book.first_publish_year}</td>
-                                <td>
+                                <td>{onShelf ?
+                                    <button className="add-btn" disabled>On shelf</button> :
                                     <button className="add-btn" onClick={()=>onAdd({title:book.title, author:author})}>Add to Shelf</button>
+                                }
                                 </td>
                             </tr>
                         )
@@ -81,7 +87,9 @@ export default function BookSearch({onAdd}) {
             <label htmlFor="bookSearch">Search Open Library</label>
             <form className="search-bar" onSubmit={handleSearch}>
                 <input id="bookSearch" type="text" placeholder="Search by title" onChange={(event)=>setQuery(event.target.value)} value={query} />
-                <button type="submit">Search</button>
+                <button type="submit" disabled={isLoading}>
+                    {isLoading ? "Searching..." : "Search"}
+                </button>
             </form>
             {content}
         </section>

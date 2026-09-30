@@ -1,6 +1,6 @@
 import BookCard from './BookCard';
 
-export default function BookList({books, onToggle, onDelete}) {
+export default function BookList({books, onToggle, onDelete, onUpdate}) {
     return (
         <section>
             <ul className="book-list">
@@ -13,6 +13,7 @@ export default function BookList({books, onToggle, onDelete}) {
                         read={book.read}
                         onToggle={onToggle}
                         onDelete={onDelete}
+                        onUpdate={onUpdate}
                     />
                 )}
             </ul>

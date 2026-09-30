@@ -237,3 +237,25 @@ body {
   color: #c53036;
   font-size: 0.9rem;
 }
+
+.book-card form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.book-card form input {
+  flex: 1;
+  min-width: 150px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+button:disabled {
+  background: #ccc;
+  color: #666;
+  cursor: not-allowed;           /* the "no" cursor on hover */
+}
