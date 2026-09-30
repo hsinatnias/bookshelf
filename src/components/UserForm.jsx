@@ -9,14 +9,15 @@ export default function UserForm({onAdd}) {
         setNewBook(prev => ({ ...prev, [field]: value }));
     }
 
-    function handleSubmit() {
+    function handleSubmit(event) {
+        event.preventDefault();
         if (newBook.title.trim() === "") return;
         onAdd(newBook);
         setNewBook({ title: "", author: "" });
     }
 
     return (
-        <section className="add-form">
+        <form className="add-form" onSubmit={handleSubmit}>
 
             <UserInputs
                 inputType="title"
@@ -28,8 +29,8 @@ export default function UserForm({onAdd}) {
                 value={newBook.author}
                 onChange={e => handleInputChange("author", e.target.value)}
             />
-            <button onClick={handleSubmit}>Add</button>
+            <button type="submit">Add</button>
 
-        </section>
+        </form>
     );
 }

@@ -7,7 +7,8 @@ export default function BookSearch({onAdd}) {
     const [errors, setErrors] = useState(null);
 
 
-    async function handleSearch() {
+    async function handleSearch(event) {
+        event.preventDefault();
         if (query.trim() === "") return;
         setIsLoading(true);
         setErrors(null);
@@ -78,10 +79,10 @@ export default function BookSearch({onAdd}) {
     return(
         <section className="book-search">
             <label htmlFor="bookSearch">Search Open Library</label>
-            <div className="search-bar">
+            <form className="search-bar" onSubmit={handleSearch}>
                 <input id="bookSearch" type="text" placeholder="Search by title" onChange={(event)=>setQuery(event.target.value)} value={query} />
-                <button onClick={handleSearch}>Search</button>
-            </div>
+                <button type="submit">Search</button>
+            </form>
             {content}
         </section>
     )
