@@ -259,3 +259,13 @@ button:disabled {
   color: #666;
   cursor: not-allowed;           /* the "no" cursor on hover */
 }
+
+.book-card button:hover:not(:disabled),
+.add-form button:hover:not(:disabled) {
+  background: #0066cc;
+}
+
+.search-bar button:hover:not(:disabled),
+.add-btn:hover:not(:disabled) {
+  background: #0066cc;
+}

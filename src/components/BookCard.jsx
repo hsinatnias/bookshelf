@@ -44,7 +44,7 @@ export default function BookCard({title, author, read, id,  onToggle, onDelete, 
 				<>
 
 				<form onSubmit={handleSave}>
-					<input value={draft.title} onChange={e=>handleChange(e.target.value, "title", )} type="text" placeholder="Title"  />
+					<input autoFocus value={draft.title} onChange={e=>handleChange(e.target.value, "title", )} type="text" placeholder="Title"  />
 					<input value={draft.author} onChange={e=>handleChange(e.target.value, "author")} type="text" placeholder="Author"  />
 					<button type="submit">Update</button>
 					<button type="button" onClick={handleCancel}>Cancel</button>

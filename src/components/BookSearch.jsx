@@ -1,17 +1,20 @@
-import { useState } from "react";
+import {useRef, useState} from "react";
 
 export default function BookSearch({onAdd, isOnShelf}) {
     const [query, setQuery] = useState("");
     const [results, setResults] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState(null);
+    const requestIdRef = useRef(0);
 
 
     async function handleSearch(event) {
         event.preventDefault();
         if(isLoading) return;
-
         if (query.trim() === "") return;
+
+        const requestId  =  ++requestIdRef.current;
+
         setIsLoading(true);
         setErrors(null);
         try{
@@ -22,11 +25,15 @@ export default function BookSearch({onAdd, isOnShelf}) {
                 throw new Error(`Search failed (status ${response.status})`);
             }
             const json = await response.json();
+            if(requestId !== requestIdRef.current) return
             setResults(json.docs);
             }catch(err){
+            if(requestId !== requestIdRef.current) return
             setErrors(err.message);
         }finally{
-            setIsLoading(false);
+            if (requestId === requestIdRef.current) {
+                setIsLoading(false);
+            }
         }
     }
 
